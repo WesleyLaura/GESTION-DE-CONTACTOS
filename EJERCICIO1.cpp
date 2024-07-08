@@ -12,7 +12,7 @@ El programa debe mantenerse en ejecución continuamente hasta que usuario indiqu
 mismo.
 */
 #include <iostream>
-
+#include <windows.h>
 #include <string>
 using namespace std;
 const int MaxContactos=100;
@@ -47,26 +47,47 @@ struct ContactoEmail{
  	
  }
 
+void MostrarContactos(const ContactoEmail Contactos[], int cantidad) {
+    for (int i = 0; i < cantidad; ++i) {
+        cout << "Nombres completos: " << Contactos[i].nombre << endl
+             << "Sexo: " << Contactos[i].sexo << endl
+             << "Edad: " << Contactos[i].edad << endl
+             << "Teléfono: " << Contactos[i].telefono << endl
+             << "Email: " << Contactos[i].email << endl
+             << "Nacionalidad: " << Contactos[i].nacionalidad << endl
+             << "---------------------------------------------------\n";
+    }
+}
+
+
+
 int main(){
+	SetConsoleOutputCP(CP_UTF8);
 	ContactoEmail Contactos[MaxContactos];
-int cantidad=0;
-int op;
+	int cantidad=0;
+	int op;
 
 	do {
-        cout << "MENU GESTION DE CONTACTOS\n";
+        cout << "---------------MENU GESTION DE CONTACTOS---------------\n";
         cout << "1. Agregar un contacto\n";
+        cout<<  "3. Mostrar contactos\n";
         cout << "5. Salir\n";
-        cout << "Ingrese una opción: ";
+        cout << "\nIngrese una opción:";
         cin >> op;
 
         switch (op) {
             case 1:
                 AgregarContacto(Contactos, cantidad);
                 break;
-           
-            case 5:
-                cout << "Saliendo del programa.\n";
-                break;
+            case 3:
+				MostrarContactos(Contactos, cantidad);  
+           		break;
+           	//case 2:
+			 //  EliminarContacto(Contactos,cantidada);	
+			 // break;
+            //case 5:
+               // cout << "Saliendo del programa.\n";
+               // break;
             default:
                 cout << "Opción no válida.\n";
         }

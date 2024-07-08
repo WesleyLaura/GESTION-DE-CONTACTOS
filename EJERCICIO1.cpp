@@ -59,6 +59,27 @@ void MostrarContactos(const ContactoEmail Contactos[], int cantidad) {
     }
 }
 
+void EliminarContacto(ContactoEmail Contactos[], int& cantidad) {
+    string nombre1;
+    cout << "Ingrese los nombres completos del contacto a eliminar: ";
+    cin.ignore();
+    getline(cin, nombre1);
+    bool encontrado = false;
+    for (int i = 0; i < cantidad; ++i) {
+        if (Contactos[i].nombre == nombre1) {
+            for (int j = i; j < cantidad - 1; ++j) {
+                Contactos[j] = Contactos[j + 1];
+            }
+            --cantidad;
+            encontrado = true;
+            cout << "Contacto eliminado.\n";
+            break;
+        }
+    }
+    if (!encontrado) {
+        cout << "Contacto no encontrado.\n";
+    }
+}
 
 
 int main(){
@@ -70,21 +91,22 @@ int main(){
 	do {
         cout << "---------------MENU GESTION DE CONTACTOS---------------\n";
         cout << "1. Agregar un contacto\n";
-        cout<<  "3. Mostrar contactos\n";
+        cout<<  "2. Mostrar contactos\n";
+        cout<<  "3. Eliminar contacto\n";
         cout << "5. Salir\n";
-        cout << "\nIngrese una opción:";
+        cout << "\n\nIngrese una opción:";
         cin >> op;
 
         switch (op) {
             case 1:
                 AgregarContacto(Contactos, cantidad);
                 break;
-            case 3:
+            case 2:
 				MostrarContactos(Contactos, cantidad);  
            		break;
-           	//case 2:
-			 //  EliminarContacto(Contactos,cantidada);	
-			 // break;
+           	case 3:
+			  EliminarContacto(Contactos,cantidad);	
+			 break;
             //case 5:
                // cout << "Saliendo del programa.\n";
                // break;

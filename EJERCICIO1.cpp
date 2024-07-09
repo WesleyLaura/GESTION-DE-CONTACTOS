@@ -143,9 +143,9 @@ int main(){
 			case 4:
 				 mostrarContactosPorServidor(Contactos,cantidad);
 				break;	 
-            //case 5:
-               // cout << "Saliendo del programa.\n";
-               // break;
+            case 5:
+                cout << "Saliendo del programa.\n";
+                break;
             default:
                 cout << "Opción no válida.\n";
         }

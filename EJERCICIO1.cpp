@@ -24,6 +24,7 @@ struct ContactoEmail{
 	int edad;
 	string telefono;
 };
+
  void AgregarContacto(ContactoEmail Contactos[], int& cantidad){
  	if(cantidad<MaxContactos){
  		ContactoEmail NuevoContacto;
@@ -76,11 +77,42 @@ void EliminarContacto(ContactoEmail Contactos[], int& cantidad) {
             break;
         }
     }
-    if (!encontrado) {
+    if (encontrado==false) {
         cout << "Contacto no encontrado.\n";
     }
 }
 
+void mostrarContactosPorServidor(ContactoEmail Contactos[], int cantidad) {
+    ContactoEmail gmail[MaxContactos], outlook[MaxContactos], yahoo[MaxContactos], otros[MaxContactos];
+    int gmailCount = 0, outlookCount = 0, yahooCount = 0, otrosCount = 0;
+
+    for (int i = 0; i < cantidad; ++i) {
+        if (Contactos[i].email.find("gmail.com") != string::npos) {
+            gmail[gmailCount++] = Contactos[i];
+        } else if (Contactos[i].email.find("outlook.com") != string::npos) {
+            outlook[outlookCount++] = Contactos[i];
+        } else if (Contactos[i].email.find("yahoo.com") != string::npos) {
+            yahoo[yahooCount++] = Contactos[i];
+        } else {
+            otros[otrosCount++] = Contactos[i];
+        }
+    }
+
+    auto printContacts = [](const ContactoEmail Contactos[], int count) {
+        for (int i = 0; i < count; ++i) {
+            cout << Contactos[i].email << " - " << Contactos[i].nombre<< '\n';
+        }
+    };
+
+    cout << "Contactos con gmail.com:\n";
+    printContacts(gmail, gmailCount);
+    cout << "Contactos con outlook.com:\n";
+    printContacts(outlook, outlookCount);
+    cout << "Contactos con yahoo.com:\n";
+    printContacts(yahoo, yahooCount);
+    cout << "Contactos con otros servidores:\n";
+    printContacts(otros, otrosCount);
+}
 
 int main(){
 	SetConsoleOutputCP(CP_UTF8);
@@ -93,6 +125,7 @@ int main(){
         cout << "1. Agregar un contacto\n";
         cout<<  "2. Mostrar contactos\n";
         cout<<  "3. Eliminar contacto\n";
+        cout<<  "4. Mostrar listado de contactos existentes por TIPO DE SERVIDOR DE CORREO\n";
         cout << "5. Salir\n";
         cout << "\n\nIngrese una opción:";
         cin >> op;
@@ -105,8 +138,11 @@ int main(){
 				MostrarContactos(Contactos, cantidad);  
            		break;
            	case 3:
-			  EliminarContacto(Contactos,cantidad);	
-			 break;
+			    EliminarContacto(Contactos,cantidad);	
+			 	break;
+			case 4:
+				 mostrarContactosPorServidor(Contactos,cantidad);
+				break;	 
             //case 5:
                // cout << "Saliendo del programa.\n";
                // break;
